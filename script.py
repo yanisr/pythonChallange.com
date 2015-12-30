@@ -5,12 +5,12 @@
 # Se script contient des fonctions permettant de résoudre les challanges proposé par le site http://www.pythonchallenge.com
 
 from collections import Counter
-import urllib.request
+#import urllib.request
 from re import *
 import time
 import pickle
 import zipfile
-#import Image
+import Image
 import bz2
 
 # url de départ: http://www.pythonchallenge.com/pc/def/0.html
@@ -71,8 +71,8 @@ def cinq(pathPickleFile):
 # url de départ: http://www.pythonchallenge.com/pc/def/channel.html
 # réultat: http://www.pythonchallenge.com/pc/def/oxygen.html
 # ressource: d'apres le README, on prend comme graine 90052
-def six(zipPath, seed):
-	zipFile = zipfile.ZipFile(zipPath)
+def six(seed):
+	zipFile = zipfile.ZipFile("res/channel.zip")
 	while(True):
 		contenu = zipFile.read(seed + ".txt")
 		commentaire = zipFile.getinfo(seed + ".txt").comment
@@ -84,14 +84,11 @@ def six(zipPath, seed):
 # url de départ: http://www.pythonchallenge.com/pc/def/oxygen.html
 # réultat: http://www.pythonchallenge.com/pc/def/integrity.html
 # list(map(chr,[105,110,116, 101, 103, 114, 105, 116, 121])) = integrity
-def sept(imagePath):
-	img = Image.open(imagePath)
+def sept():
+	img = Image.open("res/oxygen.png")
 	tabGris = [img.getpixel((x,45))[0] for x in range(0, 607, 7)]
 	tabChar = list(map(chr, tabGris))
-	ret = ""
-	for c in tabChar:
-		ret += c
-	print(ret)
+	print("".join(tabChar))
 
 
 # url de départ: http://www.pythonchallenge.com/pc/def/integrity.html
@@ -102,6 +99,20 @@ def huit():
 
 
 # url de départ: http://www.pythonchallenge.com/pc/return/good.html
-# résultat:
+# résultat: http://www.pythonchallenge.com/pc/return/bull.html
+# les pixels déssinent un taureau
 def neuf():
+	first = open("res/first.txt", "r").read().split(",")
+	second = open("res/second.txt", "r").read().split(",")
+	l = [int(a)+int(b) for a, b in zip(first, second + [0]*(len(first)-len(second)))]
+	coo = []
+	for c in range(0,len(l)-1, 2):
+		coo.append((l[c], l[c+1]))
 	
+	img = Image.open("res/good.jpg")
+	newImg = Image.new(img.mode, img.size)
+
+	for y,x in coo:
+		newImg.putpixel((x,y), (255,255,255))
+
+	newImg.save("res/newImg.jpg")
