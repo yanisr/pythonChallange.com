@@ -116,3 +116,45 @@ def neuf():
 		newImg.putpixel((x,y), (255,255,255))
 
 	newImg.save("res/newImg.jpg")
+
+# url de départ: http://www.pythonchallenge.com/pc/return/bull.html
+# résultat: http://www.pythonchallenge.com/pc/return/5808.html
+# affiche la taille des termes de la suite de conway
+def dix():
+	table = {
+		'1': '11',
+		'11': '21',
+		'111': '31',
+		'2': '12',
+		'22': '22',
+		'222': '32',
+		'3': '13',
+		'33': '23',
+		'333': '33'
+	}
+	val = '1'
+	ret = [1]
+	for i in range(30):
+		newVal = sep(val)
+		for j in range(len(newVal)):
+			newVal[j] = table[newVal[j]]
+		val = "".join(newVal)
+		ret.append(len(val))
+	print(ret)
+
+# sépare une chaine de caractere lors d'un changement de caractere
+# sep('11211122')retourne ['11', '2', '111', '22']
+def sep(suite):
+	tab = [c for c in suite]
+	ret = [suite[:1]]
+	for cour in range(1,len(tab)):
+		if tab[cour] == ret[len(ret)-1][-1:]:
+			ret[len(ret)-1] = ret[len(ret)-1] + tab[cour]
+		else :
+			ret.append(tab[cour])
+	return ret
+
+
+# url de départ: http://www.pythonchallenge.com/pc/return/5808.html
+# résultat: 
+# def onze():
