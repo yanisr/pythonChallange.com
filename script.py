@@ -156,5 +156,16 @@ def sep(suite):
 
 
 # url de départ: http://www.pythonchallenge.com/pc/return/5808.html
-# résultat: 
-# def onze():
+# résultat: http://www.pythonchallenge.com/pc/return/evil.html
+# applique un filtre (damier de pixel) su la photo
+def onze():
+	img = Image.open("res/cave.jpg")
+	newImg = Image.new(img.mode, img.size)
+	for x in range(img.size[0]):
+		for y in range(img.size[1]):
+			if (x%2 == 0 and y%2 == 0) or (y%2 == 1 and x%2 ==1):
+				newImg.putpixel((x,y), img.getpixel((x,y)))
+			else:
+				newImg.putpixel((x,y), (255,255,255))
+	newImg.save("res/newOnze.jpg")
+
